@@ -9,7 +9,6 @@ const doWhileLoopCircular = (elementArray, startIndex, times, callback) => {
         if(index === elementArray.length - 1) index = 0;
         else index++;
         callback(elementArray, index);
-        
     }
 }
 
