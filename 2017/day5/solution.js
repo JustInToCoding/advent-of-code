@@ -1,3 +1,4 @@
+console.time("Day 5b");
 const { input } = require('./input.js');
 
 const inputArray = input.split('\n');
@@ -17,8 +18,12 @@ const recursiveCalculateJumpsToExit = (input, steps, index, modifyJump) => {
     let jump = +input[index];
     input[index] = modifyJump(jump);
     steps++;
-    return (index < input.length) ? calculateJumpsToExit(input, steps, index + jump, modifyJump) : steps;
+    return (index < input.length) ? recursiveCalculateJumpsToExit(input, steps, index + jump, modifyJump) : steps;
 }
 
-//console.log(calculateJumpsToExit(inputArray, 0, 0, (value) => ++value));
-console.log(recursiveCalculateJumpsToExit(inputArray, 0, 0, (value) => value > 2 ? --value : ++value));
+
+const output = calculateJumpsToExit(inputArray, 0, 0, (value) => value > 2 ? --value : ++value);
+console.timeEnd("Day 5b");
+
+//console.log(calculateJumpsToExit(inputArray, 0, 0, (value) => ++value)); // Day 5a
+console.log(output);
