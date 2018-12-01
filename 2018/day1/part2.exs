@@ -3,14 +3,14 @@ start = System.monotonic_time()
 File.stream!("./input.txt")
 |> Stream.map(&String.replace(&1, "\n", ""))
 |> Stream.map(&Integer.parse(&1))
-|> Enum.reduce_while([0], fn {value, _}, acc ->
-  new_head = hd(acc) + value
+|> Enum.reduce_while({MapSet.new([0]), 0}, fn {value, _}, {map_set, frequency} ->
+  new_frequency = frequency + value
 
-  if Enum.member?(acc, new_head) do
+  if MapSet.member?(map_set, new_frequency) do
     IO.inspect("Found: ")
-    {:halt, new_head}
+    {:halt, new_frequency}
   else
-    {:cont, [new_head | acc]}
+    {:cont, {MapSet.put(map_set, new_frequency), new_frequency}}
   end
 end)
 |> IO.inspect()
