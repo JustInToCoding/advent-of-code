@@ -1,19 +1,16 @@
 start = System.monotonic_time()
 
-map_set = MapSet.new()
-MapSet.put(map_set, 0)
-
 File.stream!("./input.txt")
 |> Stream.map(&String.replace(&1, "\n", ""))
 |> Stream.map(&Integer.parse(&1))
-|> Enum.reduce_while(0, fn {value, _}, acc ->
-  new_frequency = acc + value
+|> Enum.reduce_while([0], fn {value, _}, acc ->
+  new_head = hd(acc) + value
 
-  if MapSet.member?(map_set, new_frequency) do
-    IO.inspect('Found: ')
-    {:halt, new_frequency}
+  if Enum.member?(acc, new_head) do
+    IO.inspect("Found: ")
+    {:halt, new_head}
   else
-    {:cont, new_frequency}
+    {:cont, [new_head | acc]}
   end
 end)
 |> IO.inspect()
