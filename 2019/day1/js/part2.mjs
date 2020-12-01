@@ -5,17 +5,15 @@ let input = fs.readFileSync("./input.txt", "utf8");
 
 const inputList = input.split("\r\n");
 
-const calcFuel = mass => {
-  const devidedByThree = Math.floor(mass / 3);
+const sum = list => list.reduce((acc, cur) => acc + cur);
 
-  if (devidedByThree <= 2) return 0;
-
-  const fuel = devidedByThree - 2;
-  return fuel + calcFuel(fuel);
+const calculateFuel = mass => {
+  const fuel = Math.floor(mass / 3) - 2;
+  return fuel > 0 ? fuel + calculateFuel(fuel) : 0;
 };
 
-const fuelList = inputList.map(calcFuel);
+const fuelList = inputList.map(calculateFuel);
 
-const sumFuelRequirement = fuelList.reduce((acc, cur) => acc + cur);
+const sumFuelRequirement = sum(fuelList);
 
 console.log(sumFuelRequirement);
