@@ -2,21 +2,15 @@ import fs from "fs";
 import { once } from "events";
 import { createInterface } from "readline";
 
-const readByLine = async (file, callback, onFinish = () => {}) => {
-  const readline = createInterface({
-    input: fs.createReadStream("input.txt"),
-    crlfDelay: Infinity,
-  });
+const readByLine = async (file, callback) =>
+  await once(
+    createInterface({
+      input: fs.createReadStream("input.txt"),
+      crlfDelay: Infinity,
+    }).on("line", callback),
+    "close"
+  );
 
-  readline.on("line", callback);
-
-  await once(readline, "close");
-
-  onFinish();
-};
-
-readByLine(
-  "input.txt",
-  (line) => console.log(JSON.stringify(line)),
-  () => console.log("done")
+readByLine("input.txt", (line) => console.log(JSON.stringify(line))).then(() =>
+  console.log("done")
 );
