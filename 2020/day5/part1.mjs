@@ -1,6 +1,4 @@
 import fs from "fs";
-import { once } from "events";
-import { createInterface } from "readline";
 
 const result = fs
   .readFileSync("./input.txt", "utf8")
