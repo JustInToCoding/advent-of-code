@@ -22,6 +22,5 @@ console.log('The result is: ', fs
       timesPastOrOnZero = (dial != 0 ? 1 : 0) + Math.floor((move >= 0 ? dial + move : -move - dial) / 100);
     }
     
-    console.log({ cur, dial, newDial, correctedNewDial, timesPastOrOnZero, countPart1: countPart1 + (!correctedNewDial) });
     return { countPart1: countPart1 + (!correctedNewDial), countPart2: countPart2 + timesPastOrOnZero, dial: correctedNewDial };
   }, { countPart1: 0, countPart2: 0, dial: 50 }));
